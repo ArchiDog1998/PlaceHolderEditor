@@ -7,6 +7,7 @@
     <Description>Description of PlaceHolderComponentEditor</Description>
     <TargetExt>.gha</TargetExt>
     <PackageLicenseFile>D:\OneDrive - stu.zafu.edu.cn\Rhino Share Files\07 Grasshopper Developments 蚱蜢开发\# 项目案例\PlaceHolderComponentEditor\LICENSE</PackageLicenseFile>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   
   <ItemGroup>
@@ -18,5 +19,9 @@
     <StartArguments></StartArguments>
     <StartAction>Program</StartAction>
   </PropertyGroup>
+  
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="Copy &quot;$(TargetPath)&quot; &quot;C:\Users\ArchiTed\AppData\Roaming\Grasshopper\Libraries\$(ProjectName).gha&quot;" />
+  </Target>
 
 </Project>
