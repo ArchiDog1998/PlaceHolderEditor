@@ -10,9 +10,9 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PlaceHolderComponentEditor
+namespace PlaceHolderEditor
 {
-    public class PlaceHolderComponentEditorPriority : GH_AssemblyPriority
+    public class PlaceHolderEditorPriority : GH_AssemblyPriority
     {
         public override GH_LoadingInstruction PriorityLoad()
         {
