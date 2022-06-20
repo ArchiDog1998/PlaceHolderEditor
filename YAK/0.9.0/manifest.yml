@@ -1,0 +1,20 @@
+---
+name: PlaceHolderEditor
+version: 0.9.0
+authors:
+- 秋水
+description: >
+  
+  You can move, delete the Place holder component or param easily! DO NOT create any place holder in any way! Such as copy or redo deleting.
+
+
+  When you select the place holder component or param, you'll see the information about the plugin, double-click it will open the default browser to search the special plugin in food4rhino. Please enjoy it!
+
+url: https://www.food4rhino.com/en/app/place-holder-editor
+keywords:
+- placeholder
+- edit
+- delete
+- qiushui
+icon_url: "https://static.food4rhino.com/s3fs-public/styles/thumbnail/public/users-files/qiu-shui/app/placeholdercomponenteditoricon256.png"
+

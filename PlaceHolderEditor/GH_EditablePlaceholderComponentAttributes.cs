@@ -63,7 +63,7 @@ namespace PlaceHolderEditor
 			showText = "Name: " + name;
 			showText += "\nVersion: " + _getVersion.GetValue(pluginInfo).ToString();
 			showText += "\nAuthor: " + _getAuthor.GetValue(pluginInfo).ToString();
-			showText += "\nAssembly: " + _getAssembly.GetValue(pluginInfo).ToString().Replace(" ", "\n                 ");
+			showText += "\nAssembly: " + _getAssembly.GetValue(pluginInfo).ToString().Replace(" ", "\n--");
 
 		}
 
@@ -111,7 +111,7 @@ namespace PlaceHolderEditor
                     {
                         DashStyle = DashStyle.Dash
                     };
-                    graphics.FillPath(Selected ? new SolidBrush(GH_Skin.wire_selected_a) : Brushes.White, graphicsPath);
+                    graphics.FillPath(Selected ? new SolidBrush(Color.PaleGreen) : Brushes.White, graphicsPath);
                     graphics.DrawPath(pen, graphicsPath);
                     graphicsPath.Dispose();
                     pen.Dispose();
