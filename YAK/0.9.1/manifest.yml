@@ -1,0 +1,28 @@
+---
+name: PlaceHolderEditor
+version: 0.9.1
+authors:
+- 秋水
+description: >
+  
+  You can move, delete the Place holder component or param easily! DO NOT copy any place holder! But you can delete it and undo it. And any movement about the place holder will NOT write to the gh or .ghx file!
+  
+  
+  When you select the place holder component or param, you'll see the information about the plugin, double-click it will open the default browser to search the special plugin in food4rhino. Please enjoy it!
+
+  
+  If you want to edit wires easily for Place holder, please Install the Quick Connection. 
+  
+  
+  0.9.1 Notes:
+  
+  1. Add a feature to delete the place holder than undo it.
+
+url: https://www.food4rhino.com/en/app/place-holder-editor
+keywords:
+- placeholder
+- edit
+- delete
+- qiushui
+icon_url: "https://static.food4rhino.com/s3fs-public/styles/thumbnail/public/users-files/qiu-shui/app/placeholdercomponenteditoricon256.png"
+
