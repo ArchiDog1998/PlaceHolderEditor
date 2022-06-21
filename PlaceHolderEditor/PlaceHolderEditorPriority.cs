@@ -24,14 +24,44 @@ namespace PlaceHolderEditor
         {
             Grasshopper.Instances.CanvasCreated -= Instances_CanvasCreated;
             canvas.DocumentChanged += Canvas_DocumentChanged;
+            canvas.Document_ObjectsAdded += Canvas_Document_ObjectsAdded;
 
             ExchangeMethod(
                 typeof(GH_Document).GetRuntimeMethods().Where(m => m.Name.Contains("RelevantObjectAtPoint") && m.GetParameters().Length == 2).First(),
                 typeof(DrawingHelper).GetRuntimeMethods().Where(m => m.Name.Contains("RelevantObjectAtPoint")).First()
             );
 
+            ExchangeMethod(
+                typeof(GH_Document).GetRuntimeMethods().First(m => m.Name.Contains("FindAttributeByGrip") && m.GetParameters().Length == 5),
+                typeof(DrawingHelper).GetRuntimeMethods().Where(m => m.Name.Contains("FindAttributeByGrip")).First()
+            );
+
+            ExchangeMethod(
+                typeof(GH_Document.GH_UndoUtil).GetRuntimeMethods().Where(m => m.Name.Contains("CreateRemoveObjectEvent") && m.GetParameters()[1].ParameterType == typeof(IGH_DocumentObject)).First(),
+                typeof(UndoServer).GetRuntimeMethods().Where(m => m.Name.Contains("CreateRemoveObjectEvent")).First()
+            );
+
+            ExchangeMethod(
+                typeof(GH_Document.GH_UndoUtil).GetRuntimeMethods().Where(m => m.Name.Contains("CreateRemoveObjectEvent") && m.GetParameters()[1].ParameterType != typeof(IGH_DocumentObject)).First(),
+                typeof(UndoServer).GetRuntimeMethods().Where(m => m.Name.Contains("CreateRemoveObjectEvents")).First()
+            );
+
         }
 
+        private void Canvas_Document_ObjectsAdded(GH_Document sender, GH_DocObjectEventArgs e)
+        {
+            foreach (var item in e.Objects)
+            {
+                if (item.GetType().FullName.Contains("Grasshopper.Kernel.Components.GH_PlaceholderComponent") && item is GH_Component compnent)
+                {
+                    compnent.Attributes = new GH_EditablePlaceholderComponentAttributes(compnent);
+                }
+                else if (item.GetType().FullName.Contains("Grasshopper.Kernel.Components.GH_PlaceholderParameter") && item is GH_Param<IGH_Goo> param)
+                {
+                    param.Attributes = new GH_EditablePlaceholderFloatingAttributes(param);
+                }
+            }
+        }
 
         private void Canvas_DocumentChanged(Grasshopper.GUI.Canvas.GH_Canvas sender, Grasshopper.GUI.Canvas.GH_CanvasDocumentChangedEventArgs e)
         {

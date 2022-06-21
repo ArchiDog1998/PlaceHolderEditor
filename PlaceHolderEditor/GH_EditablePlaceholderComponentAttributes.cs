@@ -12,6 +12,7 @@ using Grasshopper.GUI.Canvas;
 using System.Drawing.Drawing2D;
 using Grasshopper.GUI;
 using Eto.Forms;
+using GH_IO.Serialization;
 
 namespace PlaceHolderEditor
 {
@@ -23,6 +24,7 @@ namespace PlaceHolderEditor
 		private static FieldInfo _getVersion = null;
 		private static FieldInfo _getAssembly = null;
 		private static FieldInfo _getAssemblyVersion = null;
+		private static FieldInfo _getchunk = null;
 
 		private string showText;
 		private string name;
@@ -57,7 +59,10 @@ namespace PlaceHolderEditor
 				_getAssembly = pluginInfo.GetType().GetRuntimeFields().First(p => p.Name.Contains("AssemblyFullName"));
 
 			if (_getAssemblyVersion == null)
-				_getAssemblyVersion = pluginInfo.GetType().GetRuntimeFields().First(p => p.Name.Contains("AssemblyVersion"));
+				_getAssemblyVersion = pluginInfo.GetType().GetRuntimeFields().First(p => p.Name.Contains("AssemblyVersion")); 
+
+			if (_getchunk == null)
+				_getchunk = owner.GetType().GetRuntimeFields().First(p => p.Name.Contains("_chunk"));
 
 			name = _getName.GetValue(pluginInfo).ToString();
 			showText = "Name: " + name;
@@ -74,7 +79,7 @@ namespace PlaceHolderEditor
 
 			Bounds = Bounds.MoveRectangleF(dir);
 
-            foreach (var item in Owner.Params)
+			foreach (var item in Owner.Params)
             {
 				item.Attributes.Bounds = item.Attributes.Bounds.MoveRectangleF(dir);
 			}
@@ -115,7 +120,7 @@ namespace PlaceHolderEditor
                     graphics.DrawPath(pen, graphicsPath);
                     graphicsPath.Dispose();
                     pen.Dispose();
-                    break;
+					break;
 
                 case GH_CanvasChannel.Last:
 					if (!this.Selected) break;

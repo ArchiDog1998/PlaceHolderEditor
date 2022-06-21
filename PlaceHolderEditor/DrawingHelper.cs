@@ -35,7 +35,42 @@ namespace PlaceHolderEditor
 			return Math.Sqrt(Math.Pow(A.X - B.X, 2.0) + Math.Pow(A.Y - B.Y, 2.0));
 		}
 
-
+        public static IGH_Attributes FindAttributeByGrip(this GH_Document doc, PointF pt, bool bLimitToOutside, bool bIncludeInputs, bool bIncludeOutputs, int SearchRadius = 12)
+        {
+            int index = -1;
+            double num = double.MaxValue;
+            for (int i = doc.AttributeCount - 1; i >= 0; i += -1)
+            {
+                IGH_Attributes iGH_Attributes = doc.Attributes[i];
+                if (!(iGH_Attributes.DocObject is IGH_Param))
+                {
+                    continue;
+                }
+                if (bIncludeInputs && iGH_Attributes.HasInputGrip && (!bLimitToOutside || iGH_Attributes.InputGrip.X > pt.X))
+                {
+                    double num2 = Distance(iGH_Attributes.InputGrip, pt);
+                    if (num2 < num)
+                    {
+                        num = num2;
+                        index = i;
+                    }
+                }
+                if (bIncludeOutputs && iGH_Attributes.HasOutputGrip && (!bLimitToOutside || iGH_Attributes.OutputGrip.X < pt.X))
+                {
+                    double num3 = Distance(iGH_Attributes.OutputGrip, pt);
+                    if (num3 < num)
+                    {
+                        num = num3;
+                        index = i;
+                    }
+                }
+            }
+            if (num > (double)SearchRadius)
+            {
+                return null;
+            }
+            return doc.Attributes[index];
+        }
         public static GH_RelevantObjectData RelevantObjectAtPoint(this GH_Document doc, PointF pt, GH_RelevantObjectFilter searchFilter)
         {
             IList<IGH_Attributes> attributes = doc.Attributes;
@@ -80,6 +115,5 @@ namespace PlaceHolderEditor
             }
             return null;
         }
-
     }
 }
